@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 ///
 /// This can be used to specify how an animation should repeat, such as looping
 /// indefinitely or repeating a fixed number of times.
-enum RepeatMode {
+enum LoopingMode {
   /// A constant that represents a repeated animation behavior.
   ///
   /// This can be used to specify that an animation should loop or repeat
@@ -76,7 +76,7 @@ class RepeatedAnimationBuilder<T> extends StatefulWidget {
   ///
   /// This can be used to specify whether the animation should loop,
   /// reverse, or follow another repeating behavior.
-  final RepeatMode mode;
+  final LoopingMode mode;
 
   /// A builder function that creates a widget based on the provided context,
   /// value of type `T`, and an optional child widget.
@@ -133,7 +133,7 @@ class RepeatedAnimationBuilder<T> extends StatefulWidget {
     required this.duration,
     this.curve = Curves.linear,
     this.reverseCurve,
-    this.mode = RepeatMode.repeat,
+    this.mode = LoopingMode.repeat,
     required this.builder,
     this.child,
     this.lerp,
@@ -153,7 +153,7 @@ class RepeatedAnimationBuilder<T> extends StatefulWidget {
     required this.duration,
     this.curve = Curves.linear,
     this.reverseCurve,
-    this.mode = RepeatMode.repeat,
+    this.mode = LoopingMode.repeat,
     required this.animationBuilder,
     this.child,
     this.lerp,
@@ -179,8 +179,8 @@ class _RepeatedAnimationBuilderState<T>
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
-    if (widget.mode == RepeatMode.reverse ||
-        widget.mode == RepeatMode.pingPongReverse) {
+    if (widget.mode == LoopingMode.reverse ||
+        widget.mode == LoopingMode.pingPongReverse) {
       _reverse = true;
       _controller.duration = widget.reverseDuration ?? widget.duration;
       _controller.reverseDuration = widget.duration;
@@ -214,8 +214,8 @@ class _RepeatedAnimationBuilderState<T>
     }
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        if (widget.mode == RepeatMode.pingPong ||
-            widget.mode == RepeatMode.pingPongReverse) {
+        if (widget.mode == LoopingMode.pingPong ||
+            widget.mode == LoopingMode.pingPongReverse) {
           _controller.reverse();
           _reverse = true;
         } else {
@@ -223,8 +223,8 @@ class _RepeatedAnimationBuilderState<T>
           _controller.forward();
         }
       } else if (status == AnimationStatus.dismissed) {
-        if (widget.mode == RepeatMode.pingPong ||
-            widget.mode == RepeatMode.pingPongReverse) {
+        if (widget.mode == LoopingMode.pingPong ||
+            widget.mode == LoopingMode.pingPongReverse) {
           _controller.forward();
           _reverse = false;
         } else {
@@ -250,8 +250,8 @@ class _RepeatedAnimationBuilderState<T>
         oldWidget.reverseCurve != widget.reverseCurve ||
         oldWidget.mode != widget.mode ||
         oldWidget.play != widget.play) {
-      if (widget.mode == RepeatMode.reverse ||
-          widget.mode == RepeatMode.pingPongReverse) {
+      if (widget.mode == LoopingMode.reverse ||
+          widget.mode == LoopingMode.pingPongReverse) {
         _controller.duration = widget.reverseDuration ?? widget.duration;
         _controller.reverseDuration = widget.duration;
         _curvedAnimation.dispose();
