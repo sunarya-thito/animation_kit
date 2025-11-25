@@ -1,7 +1,9 @@
 name: animation_kit
 description: A Flutter package providing a collection of animations and utilities to enhance your app's user experience.
-version: 0.0.1
-homepage: https://github.com/sunarya-thito/animation_kit
+version: 0.0.2
+homepage: "https://github.com/sunarya-thito/animation_kit"
+issue_tracker: "https://github.com/sunarya-thito/animation_kit/issues"
+repository: "https://github.com/sunarya-thito/animation_kit"
 
 environment:
   sdk: ^3.7.2
